@@ -8,6 +8,7 @@ export const Login = () => {
     const { theme } = useContext(ThemeContext);
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [message, setMessage] = useState('');
     const { setIsAuthenticated } = useContext(AuthContext);
 
     const handleLogin = async () => {
@@ -26,21 +27,21 @@ export const Login = () => {
 
             if (response.ok) {
                 const userData = await response.json();
-                alert('Login realizado com sucesso!');
+                setMessage('Login realizado com sucesso!');
                 console.log('User data:', userData);
                 setIsAuthenticated(true);
             } else {
                 const errorData = await response.json();
-                alert('Erro ao fazer login: ' + errorData.error);
+                setMessage('Erro ao fazer login: ' + errorData.error);
             }
         } catch (error) {
-            alert('Erro ao fazer login: ' + error.message);
+            setMessage('Erro ao fazer login: ' + error.message);
         }
     };
 
     return (
         <div className='flex justify-center items-center'>
-            <div className={`${theme === "light" ? "bg-[#EBEBEF] text-black" : "bg-[#37373C] text-white"} p-6 rounded-lg`}>
+            <div className={`${theme === "light" ? "bg-[#EBEBEF] text-black" : "bg-[#37373C] text-white"} p-6 rounded-lg lg:w-[400px]`}>
                 <h1 className='text-center font-bold mb-4'>Login</h1>
                 <div className='flex flex-col gap-4'>
                     <div>
@@ -49,7 +50,7 @@ export const Login = () => {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className={`${theme === "light" ? "bg-[#FFFFFF] text-black" : "bg-[#27272A] text-white"} outline-none rounded-md px-4 py-1`}
+                            className={`${theme === "light" ? "bg-[#FFFFFF] text-black" : "bg-[#27272A] text-white"} outline-none rounded-md px-4 py-1 w-full`}
                         />
                     </div>
                     <div>
@@ -58,7 +59,7 @@ export const Login = () => {
                             type="password"
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)}
-                            className={`${theme === "light" ? "bg-[#FFFFFF] text-black" : "bg-[#27272A] text-white"} outline-none rounded-md px-4 py-1`}
+                            className={`${theme === "light" ? "bg-[#FFFFFF] text-black" : "bg-[#27272A] text-white"} outline-none rounded-md px-4 py-1 w-full`}
                         />
                     </div>
                     <button
@@ -67,9 +68,14 @@ export const Login = () => {
                         className='bg-sky-600 px-2 md:px-12 py-1 rounded-lg hover:bg-sky-400 transition-all ease-linear'>Entrar
                     </button>
                     <div className='flex flex-col items-center text-sm'>
-                        <h3 >Não possui conta?</h3>
+                        <h3>Não possui conta?</h3>
                         <Link to="/cadastrar" className='underline'>Cadastre-se</Link>
                     </div>
+                    {message && (
+                        <div className='mt-4 text-center'>
+                            <p>{message}</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

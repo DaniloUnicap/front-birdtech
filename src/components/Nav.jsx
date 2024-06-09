@@ -24,7 +24,6 @@ export const Nav = () => {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
-    alert("Você saiu da sua conta.");
   };
 
   return (

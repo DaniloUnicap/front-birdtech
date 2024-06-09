@@ -7,6 +7,7 @@ export const Cadastro = () => {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleCadastro = async () => {
         const userData = {
@@ -23,19 +24,19 @@ export const Cadastro = () => {
             });
 
             if (response.ok) {
-                alert('Usuário cadastrado com sucesso!');
+                setMessage('Usuário cadastrado com sucesso!');
             } else {
                 const errorData = await response.json();
-                alert('Erro ao cadastrar usuário: ' + errorData.error);
+                setMessage('Erro ao cadastrar usuário: ' + errorData.error);
             }
         } catch (error) {
-            alert('Erro ao cadastrar usuário: ' + error.message);
+            setMessage('Erro ao cadastrar usuário: ' + error.message);
         }
     };
 
     return (
         <div className='flex justify-center items-center'>
-            <div className={`${theme === "light" ? "bg-[#EBEBEF] text-black" : "bg-[#37373C] text-white"} p-6 rounded-lg`}>
+            <div className={`${theme === "light" ? "bg-[#EBEBEF] text-black" : "bg-[#37373C] text-white"} p-6 rounded-lg lg:w-[400px]`}>
                 <h1 className='text-center font-bold mb-4'>Criar conta</h1>
                 <div className='flex flex-col gap-4'>
                     <div>
@@ -44,7 +45,7 @@ export const Cadastro = () => {
                             type="text"
                             value={nome}
                             onChange={(e) => setNome(e.target.value)}
-                            className={`${theme === "light" ? "bg-[#FFFFFF] text-black" : "bg-[#27272A] text-white"} outline-none rounded-md px-4 py-1`}
+                            className={`${theme === "light" ? "bg-[#FFFFFF] text-black" : "bg-[#27272A] text-white"} outline-none rounded-md px-4 py-1 w-full`}
                         />
                     </div>
                     <div>
@@ -53,7 +54,7 @@ export const Cadastro = () => {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className={`${theme === "light" ? "bg-[#FFFFFF] text-black" : "bg-[#27272A] text-white"} outline-none rounded-md px-4 py-1`}
+                            className={`${theme === "light" ? "bg-[#FFFFFF] text-black" : "bg-[#27272A] text-white"} outline-none rounded-md px-4 py-1 w-full`}
                         />
                     </div>
                     <div>
@@ -62,7 +63,7 @@ export const Cadastro = () => {
                             type="password"
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)}
-                            className={`${theme === "light" ? "bg-[#FFFFFF] text-black" : "bg-[#27272A] text-white"} outline-none rounded-md px-4 py-1`}
+                            className={`${theme === "light" ? "bg-[#FFFFFF] text-black" : "bg-[#27272A] text-white"} outline-none rounded-md px-4 py-1 w-full`}
                         />
                     </div>
                     <button
@@ -70,6 +71,11 @@ export const Cadastro = () => {
                         onClick={handleCadastro}
                         className='bg-sky-600 px-2 md:px-12 py-1 rounded-lg hover:bg-sky-400 transition-all ease-linear'>Cadastrar
                     </button>
+                    {message && (
+                        <div className='mt-4 text-center'>
+                            <p>{message}</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
